@@ -1,7 +1,7 @@
 " vissortPlugin.vim
-"  Author:	Charles E. Campbell, Jr.
+"  Author:	Charles E. Campbell
 "			BISort() by Piet Delport
-"  Date:	Jul 18, 2011
+"  Date:	Nov 02, 2012
 "  Version:	4d	NOT RELEASED
 
 " ---------------------------------------------------------------------
@@ -15,8 +15,8 @@ set cpo&vim
 " ---------------------------------------------------------------------
 "  Public Interface: {{{1
 com! -range -nargs=0 -bang	Vissort		sil! keepj  <line1>,<line2>call vissort#VisSort(<bang>0)
-com! -range -nargs=*		BS			sil! keepj  <line1>,<line2>call BlockSort(<f-args>)
-com! -range -nargs=*		CFuncSort	sil! keepj  <line1>,<line2>call BlockSort('','^}','^[^/*]\&^[^ ][^*]\&^.*\h\w*\s*(','^.\{-}\(\h\w*\)\s*(.*$','')
+com! -range -nargs=*		BS			sil! keepj  <line1>,<line2>call vissort#BlockSort(<f-args>)
+com! -range -nargs=*		CFuncSort	sil! keepj  <line1>,<line2>call vissort#BlockSort('','^}','^[^/*]\&^[^ ][^*]\&^.*\h\w*\s*(','^.\{-}\(\h\w*\)\s*(.*$','')
 com!        -nargs=?		VisOption	sil! call vissort#Options(<q-args>)
 sil! com    -nargs=?		VSO	        sil! call vissort#Options(<q-args>)
 

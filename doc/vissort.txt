@@ -1,7 +1,7 @@
-*vissort.txt*	Visual-Mode Based Sorting		Dec 19, 2011
+*vissort.txt*	Visual-Mode Based Sorting		Sep 21, 2012
 
-Author:  Charles E. Campbell, Jr.  <NdrOchip@ScampbellPfamilyA.Mbiz>
-Copyright: (c) 2004-2011 by Charles E. Campbell, Jr.	*vissort-copyright*
+Author:  Charles E. Campbell  <NdrOchip@ScampbellPfamilyA.Mbiz>
+Copyright: (c) 2004-2012 by Charles E. Campbell		*vissort-copyright*
            The VIM LICENSE applies to vissort.vim and vissort.txt
            (see |copyright|) except use "vissort" instead of "Vim"
 	   No warranty, express or implied.  Use At-Your-Own-Risk.
@@ -19,7 +19,7 @@ Copyright: (c) 2004-2011 by Charles E. Campbell, Jr.	*vissort-copyright*
 	6. History........................................: |vissort-history|
 
 ==============================================================================
-2. Sorting a Column					 *vissort-column*
+2. Sorting a Column				*vissort* *vissort-column*
 
    Sorting a column independently of the surrounding lines~
 
@@ -181,7 +181,16 @@ Copyright: (c) 2004-2011 by Charles E. Campbell, Jr.	*vissort-copyright*
              	appears
              	---
 <
-    2. Sorting C functions (see warning above!)  [USE AT YOUR OWN RISK]
+     Explanation of Arguments for Example#1:~
+     [range]call BlockSort(
+     '^[a-z]',       | blocks begin lines with a character in the range [a-z]
+     '---$',         | blocks end with three dashes and end-of-line
+     '\u',           | blocks have at least one upper case character ([A-Z]) in them
+     '^.*\(\u\).*$', | lines  that have an upper case character (ie. are a tag) are
+     '\1')           |        transformed to contain only that upper case character
+
+    2. Sorting C functions (see warning above!)			*CFuncSort*
+			    [USE AT YOUR OWN RISK]~
 
 	:[range]CFuncSort
 	:[range]call BlockSort('','^}','^[^/*]\&^[^ ][^*]\&^.*\h\w*\s*(','^.\{-}\(\h\w*\)\s*(.*$','')
@@ -208,18 +217,32 @@ Copyright: (c) 2004-2011 by Charles E. Campbell, Jr.	*vissort-copyright*
 	Once such a line is found, the tagpat operates to identify the function name.
 	Since tagsub is '', its default value of '\1' is used.
 
+     Explanation of Arguments for Example#2:~
+     [range]call BlockSort(
+     '',                                | blocks begin after the next pattern
+     '^}',                              | blocks end with a closing curly
+                                        |     brace which begins the line
+     '^[^/*]\&^[^ ][^*]\&^.*\h\w*\s*(', | the block is tagged by an identifier
+                                        |     followed by optional spaces and
+					|     opening "(".  Some care is taken
+					|     to avoid comment lines.
+     '^.\{-}\(\h\w*\)\s*(.*$',          | the tag is extracted by using this
+                                        |     pattern
+     '')                                | the default value of '\1' is used to
+                                        |     extract only the tag
+
 ==============================================================================
 5. Options					*vissort-options*
 
 	g:vissort_sort~
 		Default Value: "sort"
 		This string holds the command used to invoke sorting.
-		(see |sort|)
+		(see |:sort|)
 
 	g:vissort_option~
 		Default Value: ""
 		This string holds any options desired; ie. "n".
-		(see |sort|)
+		(see |:sort|)
 		One may set this option with the >
 			:VSO x
 <		command, where "x" is an option (such as n or i).
